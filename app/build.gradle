@@ -51,9 +51,23 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0' // RecyclerView (リスト用コンポーネント)
     implementation 'androidx.browser:browser:1.3.0' // ChromeCustomTabs (WebViewとしてchromeを利用するタブ)
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // Retrofit2 (通信用ライブラリ)
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // Gson (Json<->Javaクラス変換ライブラリ)
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0' // Glide (画像用ライブラリ)
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0' // Glide (画像用ライブラリ)
+    // moshi
+    def moshi_version = "1.5.0"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    // Architecture component
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.3.1'
+    implementation 'androidx.activity:activity-ktx:1.2.2'
+
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 }
