@@ -23,6 +23,7 @@ class NewsRecyclerViewAdapter(private val context: Context, private val dataset:
         val options = RequestOptions().centerCrop()
         Glide.with(context).load(article.urlToImage).apply(options).into(holder.itemImageView)
 
+// 必要なので残しておく
 //        holder.itemImageView.setImageURI(dataset[position].urlToImage.toUri())
 //        holder.itemContent.text = dataset[position].content
 //        holder.itemPublish.text = dataset[position].publishedAt
