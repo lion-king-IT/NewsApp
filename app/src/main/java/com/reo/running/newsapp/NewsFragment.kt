@@ -42,16 +42,15 @@ class NewsFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             response = newsService.getNews("475a6716e0b1401ea0191041db0e6fff", "jp")
             if (response!!.isSuccessful) {
-                val users = response!!.body()
-                Log.d("debug", users.toString())
+                response!!.body()?.let {
+                    NewsRecyclerViewAdapter(requireContext()).updateArticleList(
+                        it.articles
+                    )
+                }
             }
             withContext(Dispatchers.Main) {
                 binding.run {
-                    newsRecyclerview.adapter =
-                        response!!.body()?.articles?.let {
-                            NewsRecyclerViewAdapter(requireContext(),
-                                it.filter { !it.content.isNullOrEmpty() })
-                        }
+                    newsRecyclerview.adapter = NewsRecyclerViewAdapter(requireContext())
                     newsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
                 }
             }

@@ -8,8 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class NewsRecyclerViewAdapter(private val context: Context, private val dataset: List<Article>) :
+class NewsRecyclerViewAdapter(private val context: Context) :
     RecyclerView.Adapter<NewsViewHolder>() {
+    private var dataset: List<Article> = emptyList()
+
+    fun updateArticleList(article: List<Article>) {
+        dataset = article
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.news_row, parent, false)
@@ -22,6 +28,8 @@ class NewsRecyclerViewAdapter(private val context: Context, private val dataset:
 
         val options = RequestOptions().centerCrop()
         Glide.with(context).load(article.urlToImage).apply(options).into(holder.itemImageView)
+
+
 
 // 必要なので残しておく
 //        holder.itemImageView.setImageURI(dataset[position].urlToImage.toUri())
