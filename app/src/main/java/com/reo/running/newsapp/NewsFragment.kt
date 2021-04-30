@@ -19,7 +19,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class NewsFragment : Fragment() {
     private lateinit var binding: FragmentNewsBinding
-    private var response: Response<ResponseData>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +28,10 @@ class NewsFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_news, container, false
         )
+        binding.run {
+            newsRecyclerview.adapter = NewsRecyclerViewAdapter(requireContext())
+            newsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        }
         return binding.root
     }
 
@@ -40,19 +43,10 @@ class NewsFragment : Fragment() {
             .build()
             .create(ApiService::class.java)
         GlobalScope.launch(Dispatchers.IO) {
-            response = newsService.getNews("475a6716e0b1401ea0191041db0e6fff", "jp")
-            if (response!!.isSuccessful) {
-                response!!.body()?.let {
-                    NewsRecyclerViewAdapter(requireContext()).updateArticleList(
-                        it.articles
-                    )
-                }
-            }
-            withContext(Dispatchers.Main) {
-                binding.run {
-                    newsRecyclerview.adapter = NewsRecyclerViewAdapter(requireContext())
-                    newsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-                }
+            newsService.getNews("475a6716e0b1401ea0191041db0e6fff", "jp").body()?.let {
+                NewsRecyclerViewAdapter(requireContext()).updateArticleList(
+                    it.articles
+                )
             }
         }
     }
